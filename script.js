@@ -210,16 +210,16 @@ var renderNodes = function() {
     });
 
  		var eltDiv = $('<div class="window node ' + ready + '" title="' + value.metadata.name + '" id="node-' + value.metadata.name +
-                 '" style="left: ' + (x + 250) + '; top: ' + y + '"/>');
-	  eltDiv.html('<span><b>Node</b><br/><br/>' + 
-          truncate(value.metadata.name, 6) +
+                 '" style="left: ' + (x + 350) + '; top: ' + y + '"/>');
+	  eltDiv.html('<span><b>Node</b><br/><br/>' +
+          truncate(value.metadata.name, 15) +
           '</span>');
     div.append(eltDiv);
 
 	  var elt = $('.nodesbar');
 		elt.append(div);
 
-    x += 120;
+    x += 220;
  });
 }
 
@@ -228,7 +228,7 @@ var renderGroups = function() {
 	var y = 10;
 	var serviceLeft = 0;
 	var groupOrder = makeGroupOrder();
-  var counts = {} 
+  var counts = {}
 	$.each(groupOrder, function(ix, key) {
 		list = groups[key];
 		// list = value;
@@ -248,17 +248,17 @@ var renderGroups = function() {
         }
 				eltDiv = $('<div class="window pod ' + phase + '" title="' + value.metadata.name + '" id="pod-' + value.metadata.name +
 					'" style="left: ' + (x + 250) + '; top: ' + (y + 160) + '"/>');
-				eltDiv.html('<span>' + 
-          extractVersion(value.spec.containers[0].image) + " " + truncate(value.metadata.name, 8, true) +
+				eltDiv.html('<span>' +
+          extractVersion(value.spec.containers[0].image) + " " + truncate(value.metadata.name, 30, false) +
           (value.metadata.labels.version ? "<br/>" + value.metadata.labels.version : "") + "<br/><br/>" +
-          "(" + (value.spec.nodeName ? truncate(value.spec.nodeName, 6) : "None")  +")" +
+          "(" + (value.spec.nodeName ? truncate(value.spec.nodeName, 15) : "None")  +")" +
           '</span>');
 			} else if (value.type == "service") {
 				eltDiv = $('<div class="window wide service ' + phase + '" title="' + value.metadata.name + '" id="service-' + value.metadata.name +
 					'" style="left: ' + 75 + '; top: ' + y + '"/>');
-				eltDiv.html('<span>' + 
+				eltDiv.html('<span>' +
           value.metadata.name +
-          (value.metadata.labels.version ? "<br/><br/>" + value.metadata.labels.version : "") + 
+          (value.metadata.labels.version ? "<br/><br/>" + value.metadata.labels.version : "") +
       		(value.spec.externalIPs ? "<br/><br/>" + value.spec.externalIPs[0] + ":" +value.spec.ports[0].port : "") +
           (value.spec.clusterIP ? "<br/><br/>" + value.spec.clusterIP : "") +
           (value.status.loadBalancer && value.status.loadBalancer.ingress ? "<br/><a style='color:white; text-decoration: underline' href='http://" + value.status.loadBalancer.ingress[0].ip + "'>" + value.status.loadBalancer.ingress[0].ip + "</a>" : "") +
@@ -269,17 +269,17 @@ var renderGroups = function() {
 				//eltDiv = $('<div class="window wide controller" title="' + value.metadata.name + '" id="controller-' + value.metadata.name +
 				//	'" style="left: ' + (900 + counts[key] * 100) + '; top: ' + (y + 100 + counts[key] * 100) + '"/>');
         var minLeft = 920;
-        var calcLeft = 400 + (value.status.replicas * 130);
+        var calcLeft = 400 + (value.status.replicas * 210);
         var left = minLeft > calcLeft ? minLeft : calcLeft;
 				eltDiv = $('<div class="window wide controller" title="' + value.metadata.name + '" id="controller-' + value.metadata.name +
 					'" style="left: ' + (left) + '; top: ' + (y + 100) + '"/>');
-				eltDiv.html('<span>' + 
+				eltDiv.html('<span>' +
           value.metadata.name +
-          (value.metadata.labels.version ? "<br/><br/>" + value.metadata.labels.version : "") + 
+          (value.metadata.labels.version ? "<br/><br/>" + value.metadata.labels.version : "") +
           '</span>');
 			}
 			div.append(eltDiv);
-			x += 130;
+			x += 230;
 		});
 		y += 400;
 		serviceLeft += 200;
